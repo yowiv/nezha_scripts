@@ -347,19 +347,19 @@ install_agent() {
     # echo "正在获取监控Agent版本号"
 
 
-    # _version=$(curl -m 10 -sL "https://api.github.com/repos/nezhahq/agent/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
+    # _version=$(curl -m 10 -sL "https://api.github.com/repos/yowiv/agent/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
     # if [ -z "$_version" ]; then
     #     _version=$(curl -m 10 -sL "https://gitee.com/api/v5/repos/naibahq/agent/releases/latest" | awk -F '"' '{for(i=1;i<=NF;i++){if($i=="tag_name"){print $(i+2)}}}')
     # fi
     # if [ -z "$_version" ]; then
-    #     _version=$(curl -m 10 -sL "https://fastly.jsdelivr.net/gh/nezhahq/agent/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/nezhahq\/agent@/v/g')
+    #     _version=$(curl -m 10 -sL "https://fastly.jsdelivr.net/gh/yowiv/agent/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/nezhahq\/agent@/v/g')
     # fi
     # if [ -z "$_version" ]; then
-    #     _version=$(curl -m 10 -sL "https://gcore.jsdelivr.net/gh/nezhahq/agent/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/nezhahq\/agent@/v/g')
+    #     _version=$(curl -m 10 -sL "https://gcore.jsdelivr.net/gh/yowiv/agent/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/nezhahq\/agent@/v/g')
     # fi
 
     # if [ -z "$_version" ]; then
-    #     err "获取 Agent 版本号失败，请检查本机能否链接 https://api.github.com/repos/nezhahq/agent/releases/latest"
+    #     err "获取 Agent 版本号失败，请检查本机能否链接 https://api.github.com/repos/yowiv/agent/releases/latest"
     #     return 1
     # else
     #     echo "当前最新版本为： ${_version}"
@@ -372,7 +372,7 @@ install_agent() {
 
     echo "正在下载监控端"
     if [ -z "$CN" ]; then
-        NZ_AGENT_URL="https://${GITHUB_URL}/nezhahq/agent/releases/download/${_version}/nezha-agent_linux_${os_arch}.zip"
+        NZ_AGENT_URL="https://${GITHUB_URL}/yowiv/agent/releases/download/${_version}/nezha-agent_linux_${os_arch}.zip"
     else
         NZ_AGENT_URL="https://${GITHUB_URL}/naibahq/agent/releases/download/${_version}/nezha-agent_linux_${os_arch}.zip"
     fi
@@ -581,18 +581,18 @@ update_docker_compose_image() {
     if grep -q "registry.cn-shanghai.aliyuncs.com/naibahq/nezha-dashboard$" "$yaml_file_path"; then
         sed -i 's|registry.cn-shanghai.aliyuncs.com/naibahq/nezha-dashboard$|registry.cn-shanghai.aliyuncs.com/naibahq/nezha-dashboard:v0.20.13|' "$yaml_file_path"
     fi
-    if grep -q "ghcr.io/naiba/nezha-dashboard$" "$yaml_file_path"; then
-        sed -i 's|ghcr.io/naiba/nezha-dashboard$|ghcr.io/naibahq/nezha-dashboard:v0.20.13|' "$yaml_file_path"
+    if grep -q "ghcr.io/yowiv/nezha-dashboard$" "$yaml_file_path"; then
+        sed -i 's|ghcr.io/yowiv/nezha-dashboard$|ghcr.io/naibahq/nezha-dashboard:v0.20.13|' "$yaml_file_path"
     fi
 }
 
 restart_and_update_standalone() {
-    # _version=$(curl -m 10 -sL "https://api.github.com/repos/naiba/nezha/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
+    # _version=$(curl -m 10 -sL "https://api.github.com/repos/yowiv/nezha/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
     # if [ -z "$_version" ]; then
-    #     _version=$(curl -m 10 -sL "https://fastly.jsdelivr.net/gh/naiba/nezha/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/naiba\/nezha@/v/g')
+    #     _version=$(curl -m 10 -sL "https://fastly.jsdelivr.net/gh/yowiv/nezha/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/naiba\/nezha@/v/g')
     # fi
     # if [ -z "$_version" ]; then
-    #     _version=$(curl -m 10 -sL "https://gcore.jsdelivr.net/gh/naiba/nezha/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/naiba\/nezha@/v/g')
+    #     _version=$(curl -m 10 -sL "https://gcore.jsdelivr.net/gh/yowiv/nezha/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/naiba\/nezha@/v/g')
     # fi
     # if [ -z "$_version" ]; then
     #     _version=$(curl -m 10 -sL "https://gitee.com/api/v5/repos/naibahq/nezha/releases/latest" | awk -F '"' '{for(i=1;i<=NF;i++){if($i=="tag_name"){print $(i+2)}}}')
@@ -601,7 +601,7 @@ restart_and_update_standalone() {
     _version="v0.20.13"
 
     if [ -z "$_version" ]; then
-        err "获取 Dashboard 版本号失败，请检查本机能否链接 https://api.github.com/repos/naiba/nezha/releases/latest"
+        err "获取 Dashboard 版本号失败，请检查本机能否链接 https://api.github.com/repos/yowiv/nezha/releases/latest"
         return 1
     else
         echo "当前最新版本为： ${_version}"
@@ -615,7 +615,7 @@ restart_and_update_standalone() {
     fi
 
     if [ -z "$CN" ]; then
-        NZ_DASHBOARD_URL="https://${GITHUB_URL}/naiba/nezha/releases/download/${_version}/dashboard-linux-${os_arch}.zip"
+        NZ_DASHBOARD_URL="https://${GITHUB_URL}/yowiv/nezha/releases/download/${_version}/dashboard-linux-${os_arch}.zip"
     else
         NZ_DASHBOARD_URL="https://${GITHUB_URL}/naibahq/nezha/releases/download/${_version}/dashboard-linux-${os_arch}.zip"
     fi
@@ -741,7 +741,7 @@ uninstall_dashboard() {
 uninstall_dashboard_docker() {
     sudo $DOCKER_COMPOSE_COMMAND -f ${NZ_DASHBOARD_PATH}/docker-compose.yaml down
     sudo rm -rf $NZ_DASHBOARD_PATH
-    sudo docker rmi -f ghcr.io/naiba/nezha-dashboard >/dev/null 2>&1
+    sudo docker rmi -f ghcr.io/yowiv/nezha-dashboard >/dev/null 2>&1
     sudo docker rmi -f registry.cn-shanghai.aliyuncs.com/naibahq/nezha-dashboard >/dev/null 2>&1
 }
 
@@ -830,7 +830,7 @@ show_usage() {
 show_menu() {
     printf "
     ${green}哪吒监控管理脚本 For v0${plain}
-    --- https://github.com/naiba/nezha ---
+    --- https://github.com/yowiv/nezha ---
     ${red}v0面板已停止维护，请及时升级至v1，详见https://nezha.wiki/${plain}
     ${green}1.${plain}  安装面板端
     ${green}2.${plain}  修改面板配置
